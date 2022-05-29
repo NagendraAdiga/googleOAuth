@@ -1,19 +1,20 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const auth = require("./routes/auth");
+require("dotenv").config();
 const passportConfig = require("./passport/passport");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const app = express();
 
-mongoose.connect("mongodb://127.0.0.1:27017/passport", () => {
+mongoose.connect(process.env.DB_URL, () => {
   console.log("DB CONNECTED!!");
 });
 
 app.use(
   cookieSession({
     maxAge: 3 * 24 * 60 * 60 * 1000,
-    keys: ["thisismytokenkey"],
+    keys: [process.env.COOKIE_KEY],
   })
 );
 
